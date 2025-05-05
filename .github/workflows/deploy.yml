@@ -1,0 +1,32 @@
+name: Deploy Python App
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy-on-vps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: SSH into VPS and deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: 192.162.69.217
+          username: charles
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+  
+            # Aller dans le répertoire et cloner ou mettre à jour le dépôt
+            cd /home/charles/taf
+
+            git pull origin master
+
+            
+            pip install -r requirements.txt
+
+            python index.py &

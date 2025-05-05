@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  scarp-wtj:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scarp-wtj
+    env_file:
+      - .env
+    volumes:
+      - ./.env:/app/.env:ro
+    restart: unless-stopped
